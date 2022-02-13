@@ -5,13 +5,14 @@ const { getAllGenres, getGenreById } = require('./controllers/genres')
 const { getAllNovels, getNovelByIdOrTitle } = require('./controllers/novels')
 
 const app = express()
+
 app.use(cors())
 
 app.get('/api/authors', getAllAuthors)
-app.get('/authors/:identifier', getAuthorByIdOrName)
+app.get('/api/authors/:identifier', getAuthorByIdOrName)
 
 app.get('/api/genres', getAllGenres)
-app.get('/genres/:id', getGenreById)
+app.get('/api/genres/:id', getGenreById)
 
 app.get('/api/novels', getAllNovels)
 app.get('/api/novels/:identifier', getNovelByIdOrTitle)

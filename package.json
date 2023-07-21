@@ -4,8 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:server": "./node_modules/.bin/env-cmd ./node_modules/.bin/nodemon index.js",
-    "dev:migrate": "./node_modules/.bin/env-cmd ./node_modules/.bin/sequelize db:migrate --env development --config ./configs/sequelize.js",
+    "dev": "concurrently \"npm:dev:server\" \"npm:dev:client\" ",
+    "dev:server": "npm run dev:client:build && env-cmd nodemon index.js",
+    "dev:client": "cd client && npm start",
+    "dev:client:build": "cd client && npm run build",
+    "dev:client:test": "cd client && npm run test",
+    "dev:server:test": "mocha tests/**/*.test.js",
+    "dev:migrate:up": "env-cmd sequelize db:migrate --env development --config ./configs/sequelize.js",
+    "dev:migrate:undo": "env-cmd sequelize  db:migrate:undo --env development --config ./configs/sequelize.js",
+    "dev:migrate:destroy": "env-cmd sequelize  db:migrate:undo:all --env development --config ./configs/sequelize.js",
     "lint": "./node_modules/.bin/eslint --format codeframe .",
     "lint:fix": "./node_modules/.bin/eslint --fix --format codeframe ."
   },
@@ -27,6 +34,7 @@
     "sequelize-cli": "^6.4.1"
   },
   "devDependencies": {
+    "concurrently": "^8.2.0",
     "env-cmd": "^10.1.0",
     "eslint": "^8.9.0",
     "nodemon": "^2.0.15"
